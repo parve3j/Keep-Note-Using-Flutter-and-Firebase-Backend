@@ -9,9 +9,9 @@ import '../presentation/screens/splash_screen.dart';
 final GoRouter goRouter = GoRouter(
   navigatorKey: Get.key,
   routes: [
-    GoRoute(path: '/', builder: (context, state) => SplashScreen(), name: 'splash'),
+    GoRoute(path: '/', builder: (context, state) => const SplashScreen(), name: 'splash'),
     GoRoute(path: '/login', builder: (context, state) => LoginScreen(), name: 'login'),
     GoRoute(path: '/register', builder: (context, state) => RegistrationScreen(), name: 'register'),
-    GoRoute(path: '/home', builder: (context, state) => HomeScreen(), name: 'home'),
+    GoRoute(path: '/home', builder: (context, state) => const HomeScreen(), name: 'home'),
   ],
 );
