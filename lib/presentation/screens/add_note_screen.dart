@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:keep_note/presentation/controllers/note_controller.dart';
 
 import '../../../const/app_colors.dart';
@@ -42,6 +42,7 @@ class AddNoteScreen extends StatelessWidget {
               if (title.isNotEmpty && description.isNotEmpty) {
                 _noteController.addNote(title, description);
                 Get.back();
+                context.go('/home');
                 Get.snackbar('Success', 'Note added successfully!');
               } else {
                 Get.snackbar('Error', 'Field can\'t be empty');
