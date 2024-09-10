@@ -14,6 +14,7 @@ class KeepNote extends StatelessWidget {
       title: 'Keep Note',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.appColor),
+        scaffoldBackgroundColor: Colors.grey.shade200,
         useMaterial3: true,
       ),
       initialBinding: ControllerBindings(),

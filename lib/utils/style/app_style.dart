@@ -22,15 +22,15 @@ class AppStyles {
     backgroundColor: Colors.redAccent,
     duration: const Duration(seconds: 3),
     icon: const Icon(Icons.warning, color: Colors.white,),
-    snackPosition: SnackPosition.TOP,
+    snackPosition: SnackPosition.BOTTOM,
   );
 
   GetSnackBar successSnacBar(message)=> GetSnackBar(
     message: message,
-    backgroundColor: Colors.greenAccent,
+    backgroundColor: Colors.teal,
     duration: const Duration(seconds: 3),
     icon: const Icon(Icons.done, color: Colors.white,),
-    snackPosition: SnackPosition.TOP,
+    snackPosition: SnackPosition.BOTTOM,
   );
 
 }

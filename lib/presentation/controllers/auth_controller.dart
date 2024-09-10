@@ -96,7 +96,7 @@ class AuthController extends GetxController {
   logout() async {
     await _auth.signOut();
     box.remove('user');
-    Get.offAll(LoginScreen());
+    Get.to(()=>LoginScreen());
   }
   var obscureText = true.obs;
   void toggleObscureText() {

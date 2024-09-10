@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:keep_note/presentation/screens/add_note_screen.dart';
 import '../presentation/screens/auth/login_screen.dart';
 import '../presentation/screens/auth/registration_screen.dart';
 import '../presentation/screens/home_screen.dart';
@@ -13,5 +14,6 @@ final GoRouter goRouter = GoRouter(
     GoRoute(path: '/login', builder: (context, state) => LoginScreen(), name: 'login'),
     GoRoute(path: '/register', builder: (context, state) => RegistrationScreen(), name: 'register'),
     GoRoute(path: '/home', builder: (context, state) => const HomeScreen(), name: 'home'),
+    GoRoute(path: '/addnote', builder: (context, state) => AddNoteScreen(), name: 'addnote'),
   ],
 );

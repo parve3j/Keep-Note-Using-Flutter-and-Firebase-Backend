@@ -12,6 +12,7 @@ Widget customFormField(
       readOnly = false,
       RxBool? isObscure,
       count = 0,
+      int maxLine=1,
       VoidCallback? onSuffixIconPressed,
     }) {
   return Padding(
@@ -28,15 +29,16 @@ Widget customFormField(
       obscureText: isObscure?.value ?? false,
       textInputAction: TextInputAction.next,
       validator: validator,
+      maxLines: maxLine,
       decoration: InputDecoration(
-        prefixIcon: Padding(
+        prefixIcon: count!=2? Padding(
           padding: const EdgeInsets.only(
             left: 5,
             top: 5,
             bottom: 5,
             right: 10,
           ),
-          child: Container(
+          child: count!=2? Container(
             width: 40,
             decoration: BoxDecoration(
               color: const Color(0xFFFDF2EE),
@@ -47,8 +49,8 @@ Widget customFormField(
               color: AppColors.appColor,
               size: 20,
             ),
-          ),
-        ),
+          ):null,
+        ):null,
         suffixIcon: count == 1
             ? IconButton(
           icon: Icon(
