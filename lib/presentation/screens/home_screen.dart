@@ -15,11 +15,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final AuthController _authController = Get.find();
   final NoteController _noteController = Get.find();
-  @override
-  void initState() {
-    _noteController.getNote();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: GestureDetector(
               onTap: () async {
                 await _authController.logout();
+                _noteController.note.clear();
                 Get.snackbar(
                   'Logged out',
                   'You have successfully logged out.',

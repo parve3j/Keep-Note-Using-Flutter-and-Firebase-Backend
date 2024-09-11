@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:keep_note/presentation/controllers/note_controller.dart';
 import 'package:keep_note/presentation/screens/auth/login_screen.dart';
 import 'package:keep_note/presentation/screens/home_screen.dart';
 
@@ -9,6 +11,18 @@ import '../../utils/style/app_style.dart';
 
 
 class AuthController extends GetxController {
+  final   TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final noteController = Get.put(NoteController());
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final box = GetStorage();
 
@@ -30,6 +44,9 @@ class AuthController extends GetxController {
         box.write('user', user);
         Get.back();
         Get.to(const HomeScreen());
+        nameController.clear();
+        emailController.clear();
+        passwordController.clear();
         Get.showSnackbar(AppStyles().successSnacBar('SignUp successful'));
       }
     } on FirebaseAuthException catch (e) {
@@ -68,7 +85,10 @@ class AuthController extends GetxController {
             };
             box.write('user', user);
             Get.back();
+            noteController.getNote();
             Get.to(const HomeScreen());
+            emailController.clear();
+            passwordController.clear();
             Get.showSnackbar(AppStyles().successSnacBar('Login successful'));
           } else {
             Get.back();

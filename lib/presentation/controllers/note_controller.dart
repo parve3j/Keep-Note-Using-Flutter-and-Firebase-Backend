@@ -15,7 +15,6 @@ class NoteController extends GetxController {
   }
 
   var note = <Note>[].obs;
-
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
@@ -38,9 +37,9 @@ class NoteController extends GetxController {
 
     var querySnapshot =  await firestore.collection('note').where('userId', isEqualTo: userId).get();
     note.clear();
-    querySnapshot.docs.forEach((doc){
+    for (var doc in querySnapshot.docs) {
       note.add(Note.fromMap(doc.data()));
-    });
+    }
   }
   Future<void> deleteNote(String id) async{
     await firestore.collection('note').doc(id).delete();

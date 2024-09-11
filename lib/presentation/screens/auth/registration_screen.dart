@@ -10,11 +10,7 @@ import '../../controllers/auth_controller.dart';
 
 class RegistrationScreen extends StatelessWidget {
   RegistrationScreen({super.key});
-
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  AuthController _authController = Get.find();
+  final AuthController _authController = Get.find();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -43,13 +39,13 @@ class RegistrationScreen extends StatelessWidget {
                     height: 20,
                   ),
                   customFormField(
-                      TextInputType.text, _nameController, context, 'Name',
+                      TextInputType.text, _authController.nameController, context, 'Name',
                       (val) {
                     if (val.isEmpty) {
                       return 'This field can\'t be empty';
                     }
                   }, prefixIcon: Icons.person_2_outlined),
-                  customFormField(TextInputType.emailAddress, _emailController,
+                  customFormField(TextInputType.emailAddress, _authController.emailController,
                       context, 'Email', (val) {
                     if (val.isEmpty) {
                       return 'This field can\'t be empty';
@@ -60,7 +56,7 @@ class RegistrationScreen extends StatelessWidget {
                   }, prefixIcon: Icons.email_outlined),
                   Obx(() => customFormField(
                         TextInputType.text,
-                        _passwordController,
+                        _authController.passwordController,
                         context,
                         'Password',
                         (val) {
@@ -85,9 +81,9 @@ class RegistrationScreen extends StatelessWidget {
                         () {
                           if (_formKey.currentState!.validate()) {
                             Get.find<AuthController>().signUp(
-                                _nameController.text,
-                                _emailController.text.trim(),
-                                _passwordController.text.trim(),
+                                _authController.nameController.text,
+                                _authController.emailController.text.trim(),
+                                _authController.passwordController.text.trim(),
                               context
                                 );
                           }
