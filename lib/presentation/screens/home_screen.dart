@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:keep_note/const/app_colors.dart';
 import 'package:keep_note/presentation/controllers/auth_controller.dart';
 import 'package:keep_note/presentation/controllers/note_controller.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,50 +19,55 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: buildFloatingActionButton,
-      appBar: buildAppBar,
-      body: Obx(() {
-        if (_noteController.note.isEmpty) {
-          return const Center(
-            child: Text('No Note added yet'),
-          );
-        } else {
-          return ListView.builder(
-            itemCount: _noteController.note.length,
-            itemBuilder: (context, index) {
-              final note = _noteController.note[index];
-              return Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: ListTile(
-                  title: Text(
-                    note.title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+    return WillPopScope(
+      onWillPop: () async{
+        return false;
+      },
+      child: Scaffold(
+        floatingActionButton: buildFloatingActionButton,
+        appBar: buildAppBar,
+        body: Obx(() {
+          if (_noteController.note.isEmpty) {
+            return Center(
+              child: Lottie.asset('assets/files/not_found.json', height: 160),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: _noteController.note.length,
+              itemBuilder: (context, index) {
+                final note = _noteController.note[index];
+                return Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ListTile(
+                    title: Text(
+                      note.title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      note.description,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: (){
+                        _noteController.deleteNote(note.id);
+                      },
+                      icon: const Icon(Icons.delete, color: Colors.red,)
                     ),
                   ),
-                  subtitle: Text(
-                    note.description,
-                    style: const TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  trailing: IconButton(
-                    onPressed: (){
-                      _noteController.deleteNote(note.id);
-                    },
-                    icon: const Icon(Icons.delete, color: Colors.red,)
-                  ),
-                ),
-              );
-            },
-          );
-        }
-      }),
+                );
+              },
+            );
+          }
+        }),
+      ),
     );
   }
 

@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:keep_note/model/note_model.dart';
 
+import '../../utils/style/app_style.dart';
+
 class NoteController extends GetxController {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -14,7 +16,8 @@ class NoteController extends GetxController {
     super.dispose();
   }
 
-  var note = <Note>[].obs;
+  RxList<Note> note = <Note>[].obs;
+  RxBool isLoading = true.obs;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
@@ -34,11 +37,18 @@ class NoteController extends GetxController {
   void getNote()async{
     String? userId= firebaseAuth.currentUser?.uid;
     if(userId==null) return;
-
-    var querySnapshot =  await firestore.collection('note').where('userId', isEqualTo: userId).get();
-    note.clear();
-    for (var doc in querySnapshot.docs) {
-      note.add(Note.fromMap(doc.data()));
+    isLoading(true);
+    try {
+      var querySnapshot = await firestore.collection('note').where(
+          'userId', isEqualTo: userId).get();
+      note.clear();
+      for (var doc in querySnapshot.docs) {
+        note.add(Note.fromMap(doc.data()));
+      }
+    }catch(e) {
+      Get.showSnackbar(AppStyles().failedSnacBar('Failed to fetch notes: $e'));
+    }finally{
+      isLoading(false);
     }
   }
   Future<void> deleteNote(String id) async{
